@@ -82,58 +82,6 @@
           <File Id="fileMosquittoConf" Source="..\mosquitto.conf" KeyPath="yes" />
         </Component>
 
-        <!-- Development files: import libs and top-level headers -->
-        <Directory Id="MOSQUITTODIRDEVEL" Name="devel">
-          <Component Id="CmpMosquittoDevel" Guid="0148C448-AD68-44E0-AB50-515F772F4698" Win64="yes">
-            <File Id="fileMosquittoLib"        Source="..\build64\lib\Release\mosquitto.lib" KeyPath="yes" />
-            <File Id="fileMosquittoppLib"     Source="..\build64\lib\cpp\Release\mosquittopp.lib" />
-            <File Id="fileMosquittoBrokerLib"  Source="..\build64\src\Release\mosquitto_broker.lib" />
-            <File Id="fileMosquittoH"          Source="..\include\mosquitto.h" />
-            <File Id="fileMosquittoBrokerH"    Source="..\include\mosquitto_broker.h" />
-            <File Id="fileMosquittoPluginH"    Source="..\include\mosquitto_plugin.h" />
-            <File Id="fileMosquittoppH"        Source="..\include\mosquittopp.h" />
-            <File Id="fileMqttProtocolH"       Source="..\include\mqtt_protocol.h" />
-          </Component>
-
-          <!-- Development files: mosquitto/ subdirectory headers -->
-          <Directory Id="MOSQUITTODIRDEVELMOSQUITTO" Name="mosquitto">
-            <Component Id="CmpMosquittoDevHeaders" Guid="97C249DF-FEBA-4F59-A163-A2ED09EDD827" Win64="yes">
-              <File Id="fileBrokerH"               Source="..\include\mosquitto\broker.h" KeyPath="yes" />
-              <File Id="fileBrokerControlH"        Source="..\include\mosquitto\broker_control.h" />
-              <File Id="fileBrokerPluginH"         Source="..\include\mosquitto\broker_plugin.h" />
-              <File Id="fileDefsH"                 Source="..\include\mosquitto\defs.h" />
-              <File Id="fileLibcommonH"            Source="..\include\mosquitto\libcommon.h" />
-              <File Id="fileLibcommonBase64H"      Source="..\include\mosquitto\libcommon_base64.h" />
-              <File Id="fileLibcommonCjsonH"       Source="..\include\mosquitto\libcommon_cjson.h" />
-              <File Id="fileLibcommonFileH"        Source="..\include\mosquitto\libcommon_file.h" />
-              <File Id="fileLibcommonMemoryH"      Source="..\include\mosquitto\libcommon_memory.h" />
-              <File Id="fileLibcommonPasswordH"    Source="..\include\mosquitto\libcommon_password.h" />
-              <File Id="fileLibcommonPropertiesH"  Source="..\include\mosquitto\libcommon_properties.h" />
-              <File Id="fileLibcommonRandomH"      Source="..\include\mosquitto\libcommon_random.h" />
-              <File Id="fileLibcommonStringH"      Source="..\include\mosquitto\libcommon_string.h" />
-              <File Id="fileLibcommonTimeH"        Source="..\include\mosquitto\libcommon_time.h" />
-              <File Id="fileLibcommonTopicH"       Source="..\include\mosquitto\libcommon_topic.h" />
-              <File Id="fileLibcommonUtf8H"        Source="..\include\mosquitto\libcommon_utf8.h" />
-              <File Id="fileLibmosquittoH"         Source="..\include\mosquitto\libmosquitto.h" />
-              <File Id="fileLibmosquittoAuthH"     Source="..\include\mosquitto\libmosquitto_auth.h" />
-              <File Id="fileLibmosquittoCallbacksH" Source="..\include\mosquitto\libmosquitto_callbacks.h" />
-              <File Id="fileLibmosquittoConnectH"  Source="..\include\mosquitto\libmosquitto_connect.h" />
-              <File Id="fileLibmosquittoCreateDeleteH" Source="..\include\mosquitto\libmosquitto_create_delete.h" />
-              <File Id="fileLibmosquittoHelpersH"  Source="..\include\mosquitto\libmosquitto_helpers.h" />
-              <File Id="fileLibmosquittoLoopH"     Source="..\include\mosquitto\libmosquitto_loop.h" />
-              <File Id="fileLibmosquittoMessageH"  Source="..\include\mosquitto\libmosquitto_message.h" />
-              <File Id="fileLibmosquittoOptionsH"  Source="..\include\mosquitto\libmosquitto_options.h" />
-              <File Id="fileLibmosquittoPublishH"  Source="..\include\mosquitto\libmosquitto_publish.h" />
-              <File Id="fileLibmosquittoSocksH"    Source="..\include\mosquitto\libmosquitto_socks.h" />
-              <File Id="fileLibmosquittoSubscribeH" Source="..\include\mosquitto\libmosquitto_subscribe.h" />
-              <File Id="fileLibmosquittoTlsH"      Source="..\include\mosquitto\libmosquitto_tls.h" />
-              <File Id="fileLibmosquittoUnsubscribeH" Source="..\include\mosquitto\libmosquitto_unsubscribe.h" />
-              <File Id="fileLibmosquittoWillH"     Source="..\include\mosquitto\libmosquitto_will.h" />
-              <File Id="fileMqttProtocolSubH"      Source="..\include\mosquitto\mqtt_protocol.h" />
-            </Component>
-          </Directory>
-        </Directory>
-
         <!-- Dashboard web UI -->
         <Directory Id="MOSQUITTODIRDASHBOARD" Name="dashboard">
           <Component Id="CmpDashboardRoot" Guid="417A1449-D640-46FA-834B-8618DF179714" Win64="yes">
