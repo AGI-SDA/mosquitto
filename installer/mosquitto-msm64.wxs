@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  WiX v3 source for the Eclipse Mosquitto Windows x64 MSI Merge Module.
-  Build with:
-    candle.exe -arch x64 mosquitto-msm64.wxs
-    light.exe  -o mosquitto-2.1.2-x64.msm mosquitto-msm64.wixobj
-  Or with the WiX v4 CLI:
-    wix build -arch x64 -o mosquitto-2.1.2-x64.msm mosquitto-msm64.wxs
+  WiX Toolset 3.14.1.8722 source for the Eclipse Mosquitto Windows x64
+  MSI Merge Module.  Build with:
+    candle.exe -arch x64 -out mosquitto-msm64.wixobj mosquitto-msm64.wxs
+    light.exe  -out mosquitto-2.1.2-x64.msm mosquitto-msm64.wixobj
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
@@ -80,19 +78,15 @@
         </Component>
 
         <!-- Default config (do not overwrite if already present) -->
-        <Component Id="CmpMosquittoConf" Guid="95898B5B-884C-4B00-8565-3DEAF31C4FAB" Win64="yes">
-          <File Id="fileMosquittoConf" Source="..\mosquitto.conf" KeyPath="yes">
-            <Permission User="Everyone" GenericAll="yes" />
-          </File>
-          <!-- NeverOverwrite ensures an existing mosquitto.conf is preserved on upgrade -->
-          <NeverOverwrite />
+        <Component Id="CmpMosquittoConf" Guid="95898B5B-884C-4B00-8565-3DEAF31C4FAB" Win64="yes" NeverOverwrite="yes">
+          <File Id="fileMosquittoConf" Source="..\mosquitto.conf" KeyPath="yes" />
         </Component>
 
         <!-- Development files: import libs and top-level headers -->
         <Directory Id="MOSQUITTODIRDEVEL" Name="devel">
           <Component Id="CmpMosquittoDevel" Guid="0148C448-AD68-44E0-AB50-515F772F4698" Win64="yes">
             <File Id="fileMosquittoLib"        Source="..\build64\lib\Release\mosquitto.lib" KeyPath="yes" />
-            <File Id="fileMosquittopp Lib"     Source="..\build64\lib\cpp\Release\mosquittopp.lib" />
+            <File Id="fileMosquittoppLib"     Source="..\build64\lib\cpp\Release\mosquittopp.lib" />
             <File Id="fileMosquittoBrokerLib"  Source="..\build64\src\Release\mosquitto_broker.lib" />
             <File Id="fileMosquittoH"          Source="..\include\mosquitto.h" />
             <File Id="fileMosquittoBrokerH"    Source="..\include\mosquitto_broker.h" />
