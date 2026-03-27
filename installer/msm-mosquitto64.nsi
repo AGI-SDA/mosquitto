@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WiX Toolset 3.14.1.8722 source for the Eclipse Mosquitto Windows x64
+  MSI Merge Module.  Build with:
+    candle.exe -arch x64 -out mosquitto-msm64.wixobj mosquitto-msm64.wxs
+    light.exe  -out mosquitto-2.1.2-x64.msm mosquitto-msm64.wixobj
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!--
+    Module GUID: identifies this merge module uniquely.
+    Version must match the mosquitto release being packaged.
+  -->
+  <Module Id="Mosquitto64"
+          Language="1033"
+          Version="2.1.2"
+          Guid="EA66C2DE-EDBB-4099-8455-1166931BE9B3">
+
+    <Package Description="Eclipse Mosquitto MQTT broker (64-bit)"
+             Manufacturer="Eclipse Foundation"
+             InstallerVersion="200" />
+
+    <!-- ============================================================
+         Directory structure
+         The consumer MSI must define MOSQUITTODIR before merging.
+    ============================================================ -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="MOSQUITTODIR">
+
+        <!-- Main binaries and runtime files -->
+        <Component Id="CmpMosquittoCore" Guid="D001AC55-457D-4BDA-81FB-11479B0A9128" Win64="yes">
+          <File Id="fileMosquittoIco"       Source="..\logo\mosquitto.ico" />
+          <File Id="fileMosquittoExe"       Source="..\build64\src\Release\mosquitto.exe" KeyPath="yes" />
+          <File Id="fileDbDumpExe"          Source="..\build64\apps\db_dump\Release\mosquitto_db_dump.exe" />
+          <File Id="fileMosquittoCtrlExe"   Source="..\build64\apps\mosquitto_ctrl\Release\mosquitto_ctrl.exe" />
+          <File Id="fileMosquittoPasswdExe" Source="..\build64\apps\mosquitto_passwd\Release\mosquitto_passwd.exe" />
+          <File Id="fileMosquittoSignalExe" Source="..\build64\apps\mosquitto_signal\Release\mosquitto_signal.exe" />
+          <File Id="fileMosquittoPubExe"    Source="..\build64\client\Release\mosquitto_pub.exe" />
+          <File Id="fileMosquittoSubExe"    Source="..\build64\client\Release\mosquitto_sub.exe" />
+          <File Id="fileMosquittoRrExe"     Source="..\build64\client\Release\mosquitto_rr.exe" />
+          <File Id="fileMosquittoCommonDll" Source="..\build64\libcommon\Release\mosquitto_common.dll" />
+          <File Id="fileMosquittoDll"       Source="..\build64\lib\Release\mosquitto.dll" />
+          <File Id="fileMosquittoppDll"    Source="..\build64\lib\cpp\Release\mosquittopp.dll" />
+        </Component>
+
+        <!-- Plugin DLLs -->
+        <Component Id="CmpMosquittoPlugins" Guid="47A25C4D-D2BD-416B-A081-43E6965905D2" Win64="yes">
+          <File Id="fileAclFileDll"            Source="..\build64\plugins\acl-file\Release\mosquitto_acl_file.dll" KeyPath="yes" />
+          <File Id="fileDynSecDll"             Source="..\build64\plugins\dynamic-security\Release\mosquitto_dynamic_security.dll" />
+          <File Id="filePasswordFileDll"       Source="..\build64\plugins\password-file\Release\mosquitto_password_file.dll" />
+          <File Id="filePersistSqliteDll"      Source="..\build64\plugins\persist-sqlite\Release\mosquitto_persist_sqlite.dll" />
+          <File Id="fileSparkplugAwareDll"     Source="..\build64\plugins\sparkplug-aware\Release\mosquitto_sparkplug_aware.dll" />
+        </Component>
+
+        <!-- Third-party dependency DLLs (vcpkg) -->
+        <Component Id="CmpVcpkgDeps" Guid="01543F8F-84C2-48F8-883C-931DBD43860D" Win64="yes">
+          <File Id="fileCjsonDll"          Source="..\build64\vcpkg_installed\x64-windows-release\bin\cjson.dll" KeyPath="yes" />
+          <File Id="fileLibcrypto3Dll"     Source="..\build64\vcpkg_installed\x64-windows-release\bin\libcrypto-3-x64.dll" />
+          <File Id="fileLibmicrohttpdDll"  Source="..\build64\vcpkg_installed\x64-windows-release\bin\libmicrohttpd-dll.dll" />
+          <File Id="fileLibssl3Dll"        Source="..\build64\vcpkg_installed\x64-windows-release\bin\libssl-3-x64.dll" />
+          <File Id="filePthreadVC3Dll"     Source="..\build64\vcpkg_installed\x64-windows-release\bin\pthreadVC3.dll" />
+          <File Id="fileSqlite3Dll"        Source="..\build64\vcpkg_installed\x64-windows-release\bin\sqlite3.dll" />
+        </Component>
+
+        <!-- Documentation and example config files -->
+        <Component Id="CmpMosquittoDocs" Guid="FC6570B0-C405-4B15-BB47-3AAEA4376EB4" Win64="yes">
+          <File Id="fileAclfileExample"       Source="..\aclfile.example" KeyPath="yes" />
+          <File Id="fileChangeLogTxt"         Source="..\ChangeLog.txt" />
+          <File Id="fileNoticeMd"             Source="..\NOTICE.md" />
+          <File Id="filePskfileExample"       Source="..\pskfile.example" />
+          <File Id="filePwfileExample"        Source="..\pwfile.example" />
+          <File Id="fileReadmeMd"             Source="..\README.md" />
+          <File Id="fileReadmeWindowsTxt"     Source="..\README-windows.txt" />
+          <File Id="fileReadmeLetsencryptMd"  Source="..\README-letsencrypt.md" />
+          <File Id="fileSecurityMd"           Source="..\SECURITY.md" />
+          <File Id="fileEdlV10"               Source="..\edl-v10" />
+          <File Id="fileEplV20"               Source="..\epl-v20" />
+        </Component>
+
+        <!-- Default config (do not overwrite if already present) -->
+        <Component Id="CmpMosquittoConf" Guid="95898B5B-884C-4B00-8565-3DEAF31C4FAB" Win64="yes" NeverOverwrite="yes">
+          <File Id="fileMosquittoConf" Source="..\mosquitto.conf" KeyPath="yes" />
+        </Component>
+
+        <!-- Dashboard web UI -->
+        <Directory Id="MOSQUITTODIRDASHBOARD" Name="dashboard">
+          <Component Id="CmpDashboardRoot" Guid="417A1449-D640-46FA-834B-8618DF179714" Win64="yes">
+            <File Id="fileDashboardIndexHtml"     Source="..\dashboard\src\index.html" KeyPath="yes" />
+            <File Id="fileDashboardListenersHtml" Source="..\dashboard\src\listeners.html" />
+          </Component>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDAPP" Name="app">
+            <Component Id="CmpDashboardApp" Guid="1A0447B1-A54E-4288-9F6A-10AA0CF16086" Win64="yes">
+              <File Id="fileDashboardConstsJs"    Source="..\dashboard\src\app\consts.js" KeyPath="yes" />
+              <File Id="fileDashboardDashboardJs" Source="..\dashboard\src\app\dashboard.js" />
+              <File Id="fileDashboardIndexJs"     Source="..\dashboard\src\app\index.js" />
+              <File Id="fileDashboardListenersJs" Source="..\dashboard\src\app\listeners.js" />
+              <File Id="fileDashboardSidebarJs"   Source="..\dashboard\src\app\sidebar.js" />
+            </Component>
+          </Directory>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDCSS" Name="css">
+            <Component Id="CmpDashboardCss" Guid="A88B1A0E-16FF-4874-BF69-D8EAA89EC8E6" Win64="yes">
+              <File Id="fileDashboardStylesCss" Source="..\dashboard\src\css\styles.css" KeyPath="yes" />
+            </Component>
+          </Directory>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDLIB" Name="lib">
+            <Component Id="CmpDashboardLib" Guid="33928C62-6FD3-41CB-AC81-BCEB15384B8F" Win64="yes">
+              <File Id="fileDashboardChartJs"         Source="..\dashboard\src\lib\chart.umd.js" KeyPath="yes" />
+              <File Id="fileDashboardChartZoomJs"     Source="..\dashboard\src\lib\chartjs-plugin-zoom.min.js" />
+              <File Id="fileDashboardHammerJs"        Source="..\dashboard\src\lib\hammer.min.js" />
+            </Component>
+          </Directory>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDMEDIA" Name="media">
+            <Component Id="CmpDashboardMedia" Guid="61128928-3945-43CE-AA69-14698923E050" Win64="yes">
+              <File Id="fileDashboardBannerSvg"       Source="..\dashboard\src\media\banner.svg" KeyPath="yes" />
+              <File Id="fileDashboardFavicon16"       Source="..\dashboard\src\media\favicon-16x16.png" />
+              <File Id="fileDashboardFavicon32"       Source="..\dashboard\src\media\favicon-32x32.png" />
+              <File Id="fileDashboardLogoPng"         Source="..\dashboard\src\media\mosquitto-logo.png" />
+            </Component>
+          </Directory>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDTAILWIND" Name="tailwind">
+            <Component Id="CmpDashboardTailwind" Guid="1D637963-04B8-4FB2-948F-AE8C03E72AB7" Win64="yes">
+              <File Id="fileDashboardTailwindConfigJs" Source="..\dashboard\src\tailwind.config.js" KeyPath="yes" />
+              <File Id="fileDashboardTailwindCss"      Source="..\dashboard\src\tailwind\styles.css" />
+            </Component>
+          </Directory>
+
+          <Directory Id="MOSQUITTODIRDASHBOARDUTILS" Name="utils">
+            <Component Id="CmpDashboardUtils" Guid="321F85EC-4177-49B0-BC02-7E7644969C9D" Win64="yes">
+              <File Id="fileDashboardAssertJs" Source="..\dashboard\src\utils\assert.js" KeyPath="yes" />
+              <File Id="fileDashboardQueueJs"  Source="..\dashboard\src\utils\queue.js" />
+              <File Id="fileDashboardUtilsJs"  Source="..\dashboard\src\utils\utils.js" />
+            </Component>
+          </Directory>
+        </Directory>
+
+      </Directory>
+    </Directory>
+
+  </Module>
+</Wix>
