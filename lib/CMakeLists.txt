@@ -80,7 +80,7 @@ if(WITH_WEBSOCKETS AND WITH_WEBSOCKETS_BUILTIN)
 		)
 endif()
 
-add_library(libmosquitto SHARED
+add_library(libmosquitto ${LIB_TYPE_LIBRARY}
 	${C_SRC}
 )
 
@@ -100,14 +100,7 @@ target_include_directories(libmosquitto
 )
 
 if(WITH_THREADING)
-	if(WIN32)
-		set (LIBRARIES ${LIBRARIES} PThreads4W::PThreads4W)
-	else()
-		set(THREADS_PREFER_PTHREAD_FLAG ON)
-		find_package(Threads REQUIRED)
-
-		set (LIBRARIES ${LIBRARIES} Threads::Threads)
-	endif()
+	set (LIBRARIES ${LIBRARIES} ${THREADLIB})
 endif()
 
 target_link_libraries(libmosquitto PUBLIC ${LIBRARIES})
@@ -126,7 +119,7 @@ if(UNIX AND NOT APPLE AND NOT AIX)
 	)
 endif()
 
-install(TARGETS libmosquitto
+custom_install(TARGETS libmosquitto
 	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 	ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
@@ -161,7 +154,7 @@ if(WITH_STATIC_LIBRARIES)
 	)
 
 	target_compile_definitions(libmosquitto_static PUBLIC "LIBMOSQUITTO_STATIC")
-	install(TARGETS libmosquitto_static
+	custom_install(TARGETS libmosquitto_static
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 	)
 endif()
